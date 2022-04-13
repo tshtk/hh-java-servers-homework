@@ -1,25 +1,22 @@
 package filter;
 
 import javax.servlet.ServletException;
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 
-public class AuthFilter implements Filter {
+public class AuthFilter extends HttpFilter {
 
     @Override
-    public void doFilter(final ServletRequest rq, final ServletResponse rs, final FilterChain chain)
+    protected void doFilter(final HttpServletRequest rq, final HttpServletResponse rs, final FilterChain chain)
             throws IOException, ServletException {
-        HttpServletRequest httpRq = (HttpServletRequest) rq;
-
         boolean authCookie = false;
 
-        Cookie[] cookies = httpRq.getCookies();
+        Cookie[] cookies = rq.getCookies();
 
         if (cookies != null) {
             final String nameAuthCookie = "hh-auth";
